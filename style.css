@@ -10,7 +10,13 @@
 		width: auto\9; /* ie8 */
 
 	}
-	p {
+	.text {
+		max-width: 100%;
+		height: auto;
+		width: auto\9; /* ie8 */
+		text-align: center;
+	}
+	div {
 		max-width: 100%;
 		height: auto;
 		width: auto\9; /* ie8 */
@@ -22,9 +28,9 @@
 		align-items: center;
 		justify-content: center;
 		}
+
 		.container {
 		display: grid;
-
 		height: calc(17vw - 10px);  /*instead playing around with grid gap gap */
 		grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 		}
@@ -55,6 +61,7 @@
 	.guide {
 		font-family: "Poppins", sans-serif;
 		font-size: 50px;
+		text-align: center;
 		box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
 		background-color: rgb(187, 197, 130);
 		margin: 10px;
