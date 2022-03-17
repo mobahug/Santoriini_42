@@ -1,6 +1,7 @@
 const mapDisplay = document.querySelector('.parent');
 const p1 = document.querySelector('.player1');
 const p2 = document.querySelector('.player2');
+const guide = document.querySelector('.guide');
 
 let stage = 0;
 let isGameOver = false;
@@ -27,6 +28,10 @@ function handleClickPlayer(player)
 	if (selected.localeCompare('false') == 0)
 	{
 		player.setAttribute('selected', 'true');
+	}
+	else if (selected.localeCompare('true') == 0)
+	{
+		player.setAttribute('selected', 'false');
 	}
 }
 
@@ -59,7 +64,7 @@ function handleClick(tileElement)
 	if (selected1.localeCompare('true') == 0)// && (stage == 0 || stage == 2))
 	{
 		tileElement.appendChild(p1);
-		p1.addEventListener('click', () => handleClickPlayer(p2));
+		//pl1.addEventListener('click', () => handleClickPlayer(pl1));
 		p1.setAttribute('selected', 'false');
 		p1.setAttribute('level', prevLevel);
 		if (prevLevel == 3)
@@ -71,7 +76,7 @@ function handleClick(tileElement)
 	else if (selected2.localeCompare('true') == 0)// && (stage == 1 || stage == 4))
 	{
 		tileElement.appendChild(p2);
-		p2.addEventListener('click', () => handleClickPlayer(p2));
+		//p2.addEventListener('click', () => handleClickPlayer(p2));
 		p2.setAttribute('selected', 'false');
 		p2.setAttribute('level', prevLevel);
 		if (prevLevel == 3)
@@ -99,18 +104,19 @@ function handleClick(tileElement)
 			tileElement.style.backgroundColor = 'blue';
 	}
 }
-/*
-function allowDrop(ev) {
-	ev.preventDefault();
-	ev.dataTransfer.setData("text", ev.target.id);
-}
 
-function drag(ev) {
-	ev.dataTransfer.setData("text", ev.target.id);
-}
+function initialStage(p1, p2)
+{
+	//first
+	//guide display stage
+	//ask user to place their pieces
+	//bottom childnotes should not contain player1
+	// then return and it will ask p2 to do the same thing
+	//
+	let players = document.getElementsByClassName('.bottom');
+	players.forEach( play => {
+		console.log(play);
+		// check if class = p1
+	})
 
-function drop(ev) {
-	ev.preventDefault();
-	var data = ev.dataTransfer.getData("text");
-	ev.target.appendChild(document.getElementById(data));
-}*/
+}

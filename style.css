@@ -33,7 +33,17 @@
 		display: grid;
 		height: calc(17vw - 10px);  /*instead playing around with grid gap gap */
 		grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+		
+		justify-content: center;
 		}
+			.player1 {
+				font-family: "Poppins", sans-serif;
+				background-color: rgb(199, 78, 78);
+				width: 50px;
+				height: 50px;
+				border-radius: 100px;
+				box-sizing: 35px;
+			}
 
 		.container div {
 		margin: 0 10px 10px 0;  /*instead playing around with grid gap gap */
@@ -42,22 +52,11 @@
 		box-shadow: 7px 7px 0px 1px #0000001a;
 		display: flex;  /* or grid */
 		border-radius: 10px;
+		align-items: center;
+		justify-content: center;
 		}
-	.player1 {
-		background-color: rgb(199, 78, 78);
-		width: 10px;
-		height: 10px;
-		border-radius: 100px;
-	}
-	.gap {
-		flex: 33.33;
-	}
-	.player2 {
-		background-color: rgb(78, 130, 199);
-		width: 10px;
-		height: 10px;
-		border-radius: 100px;
-	}
+		
+
 	.guide {
 		font-family: "Poppins", sans-serif;
 		font-size: 50px;
@@ -66,5 +65,22 @@
 		background-color: rgb(187, 197, 130);
 		margin: 10px;
 		border-radius: 10px;
-
 	}
+
+
+	.player2 {
+		font-family: "Poppins", sans-serif;
+		background-color: rgb(78, 130, 199);
+		width: 50px;
+		height: 50px;
+		border-radius: 100px;
+	}
+
+	.bottom {
+
+		background-color: rgb(187, 197, 130);
+		border-radius: 10px;
+		align-items: center;
+		justify-content: center;
+		margin: 10px;
+		}
