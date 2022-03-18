@@ -8,6 +8,11 @@ const p2 = document.querySelector('.piece2');
 const p3 = document.querySelector('.piece3');
 const p4 = document.querySelector('.piece4');
 const guide = document.querySelector('.guide');
+const resetButton = document.querySelector('.resetButton');
+
+resetButton.addEventListener('click', () => {
+	window.location.reload();
+});
 
 let stage = 0;
 let isGameOver = false;
@@ -192,7 +197,6 @@ function handleClick(tileElement)
 			}
 		}
 	}
-	
 }
 
 /*	function called in initialization fase	*/
@@ -213,7 +217,6 @@ function moveCheckPlace2(player, tileElement, prevLevel, name, pl)
 {
 	if (checkIfValidMove(player, tileElement, prevLevel) == false)
 	{
-		console.log("i was here");
 		// return error message to user or maybe play audio that it is wrong move
 		return (false);
 	}
