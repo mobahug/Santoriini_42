@@ -40,18 +40,55 @@
 		</div>
 		<div class="parent2"></div>
 			<div id="card-0" class="container2">
+
 				<div id="card-0-tile-0"
 				title="Win condition: You also win if your worker moves down two or more levels.">
-					<button class="heroInfo" onclick="cardButton()">Minotaur</button>
-					<div>
-						<button class="select" id="selectHero" onclick="selectHero()">Select</button>
+					<button class="heroInfo" onclick="cardButton0()">Minotaur</button>
+					<div class="select">
+						<button class="select" id="Minotaur" onclick="selectHero()">Select</button>
 					</div>
 				</div>
-				<div id="card-0-tile-1"></div>
-				<div id="card-0-tile-2"></div>
-				<div id="card-0-tile-3"></div>
-				<div id="card-0-tile-4"></div>
-				<div id="card-0-tile-5"></div>
+
+				<div id="card-0-tile-1"
+				title="Win condition: You also win when there are at least five Complete Towers on the board.">
+					<button class="heroInfo" onclick="cardButton1()">Chronus</button>
+					<div class="select">
+						<button class="select" id="Chronus" onclick="selectHero()">Select</button>
+					</div>
+				</div>
+
+				<div id="card-0-tile-2"
+				title="Opponent's turn: An opponent cannot win by moving into a perimeter space.">
+					<button class="heroInfo" onclick="cardButton2()">Hera</button>
+					<div class="select">
+						<button class="select" id="Hera" onclick="selectHero()">Select</button>
+					</div>
+				</div>
+
+				<div id="card-0-tile-3"
+				title="Your build: Your worker may build a block under itself.">
+					<button class="heroInfo" onclick="cardButton3()">Zeus</button>
+					<div class="select">
+						<button class="select" id="Zeus" onclick="selectHero()">Select</button>
+					</div>
+				</div>
+
+				<div id="card-0-tile-4"
+				title="Opponent's turn: opponent workers cannot build on spaces neighboring your workers, unless building a dome to create a Complete Tower.">
+					<button class="heroInfo" onclick="cardButton4()">Limus</button>
+					<div class="select">
+						<button class="select" id="Limus" onclick="selectHero()">Select</button>
+					</div>
+				</div>
+
+				<div id="card-0-tile-5"
+				title="The Player choose to not have Hero card.">
+					<button class="heroInfo" onclick="cardButton5()">No Card</button>
+					<div class="select">
+						<button class="select" id="NoCard" onclick="selectHero()">Select</button>
+					</div>
+				</div>
+
 			</div>
 	</body>
 </html>

@@ -28,7 +28,7 @@ const rows = [
 
 const cards = [
 	['', '', '', '', '', '']
-] 
+]
 
 /*	initiate players	*/
 
@@ -72,10 +72,40 @@ function handleClickPlayer(player, player2)
 	}
 }
 
-//p2.style.display = "none";
-function cardButton()
+function cardButton0()
 {
+	/*Minotaur*/
 	alert("Win condition: You also win if your worker moves down two or more levels.");
+}
+
+function cardButton1()
+{
+	/*Chronus*/
+	alert("Win condition: You also win when there are at least five Complete Towers on the board.");
+}
+
+function cardButton2()
+{
+	/*Hera*/
+	alert("Opponent's turn: An opponent cannot win by moving into a perimeter space.");
+}
+
+function cardButton3()
+{
+	/*Zeus*/
+	alert("Your build: Your worker may build a block under itself.");
+}
+
+function cardButton4()
+{
+	/*Limus*/
+	alert("Opponent's turn: opponent workers cannot build on spaces neighboring your workers, unless building a dome to create a Complete Tower.");
+}
+
+function cardButton5()
+{
+	/*Zeus*/
+	alert("The Player choose to not have Hero card.");
 }
 
 /*	creates map	*/
@@ -491,7 +521,7 @@ if (card == 'Minotaur')
 {
 	let dif = prevLevel - level;
 	if (dif <= -2)
-		
+
 }
 
 
