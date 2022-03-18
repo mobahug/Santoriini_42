@@ -10,11 +10,27 @@ const p4 = document.querySelector('.piece4');
 const guide = document.querySelector('.guide');
 const resetButton = document.querySelector('.resetButton');
 
+/*	grab hero cards	*/
+
+const	minotaur = document.getElementById("Minotaur");
+const	chronus = document.getElementById("Chronus");
+const	hera = document.getElementById("Hera");
+const	zeus = document.getElementById("Zeus");
+const	limus = document.getElementById("Limus");
+const	noCard = document.getElementById("NoCard");
+
+minotaur.addEventListener('click', () => selectHero(minotaur));
+chronus.addEventListener('click', () => selectHero(chronus));
+hera.addEventListener('click', () => selectHero(hera));
+zeus.addEventListener('click', () => selectHero(zeus));
+limus.addEventListener('click', () => selectHero(limus));
+noCard.addEventListener('click', () => selectHero(noCard));
+
 resetButton.addEventListener('click', () => {
 	window.location.reload();
 });
 
-let stage = 0;
+let stage = -2;
 let isGameOver = false;
 let countCompleteTowers = 0;
 
@@ -34,11 +50,13 @@ const cards = [
 
 /*	player 1 pieces	*/
 
-guide.style.color = 'red';
-guide.textContent = 'Player 1: Place both pieces on the board';
+guide.style.color = 'black';
+guide.textContent = 'Player 1: Select God Card';
 
 pl1.setAttribute('inPlay', 'true');
 pl2.setAttribute('inPlay', 'false');
+pl1.setAttribute('card', 'nocard');
+pl2.setAttribute('card', 'nocard');
 
 p1.setAttribute('level', 0);
 p1.setAttribute('selected', 'false');
@@ -64,11 +82,14 @@ p4.addEventListener('click', () => handleClickPlayer(p4, p2));
 
 function handleClickPlayer(player, player2)
 {
-	let selected = player.getAttribute('selected');
-	player2.setAttribute('selected', 'false');
-	if (selected.localeCompare('false') == 0)
+	if (stage >= 0)
 	{
-		player.setAttribute('selected', 'true');
+		let selected = player.getAttribute('selected');
+		player2.setAttribute('selected', 'false');
+		if (selected.localeCompare('false') == 0)
+		{
+			player.setAttribute('selected', 'true');
+		}
 	}
 }
 
@@ -108,6 +129,29 @@ function cardButton5()
 	alert("The Player choose to not have Hero card.");
 }
 
+/*	assign card attribute to player	*/
+
+function	selectHero(card)
+{
+	if (stage == -2 || stage == -1)
+	{
+		let inPlay1 = pl1.getAttribute('inPlay');
+		let inPlay2 = pl2.getAttribute('inPlay');
+		let godCard = card.getAttribute('id');
+
+		if (inPlay1.localeCompare('true') == 0)
+		{
+			pl1.setAttribute('card', godCard);
+			switchStage('pl1');
+		}
+		else if (inPlay2.localeCompare('true') == 0)
+		{
+			pl2.setAttribute('card', godCard);
+			switchStage('pl2');
+		}
+	}
+}
+
 /*	creates map	*/
 
 rows.forEach((row, rowIndex) => {
@@ -126,50 +170,6 @@ rows.forEach((row, rowIndex) => {
 	mapDisplay.append(rowElement);
 })
 
-cards.forEach((card, cardIndex) => {
-	let index = 0;
-	const cardElement = document.createElement('div');
-	cardElement.setAttribute('id', 'card-' + cardIndex);
-	cardElement.setAttribute('class', 'container2');
-	card.forEach((tile, tileIndex) => {
-		const tileElement = document.createElement('div');
-		tileElement.setAttribute('id', 'card-' + cardIndex + '-tile-' + tileIndex);
-		//tileElement.addEventListener('click', () => handleClick(tileElement));
-		IndexOfCards(index);
-		index++;
-		cardElement.append(tileElement);
-	})
-	mapDisplay2.append(cardElement);
-})
-
-function IndexOfCards(index)
-{
-	if (index == 0)
-	{
-		cards.textContent = 'Minotaur';
-	}
-	else if (index == 1)
-	{
-		cards.textContent = 'Chronus';
-	}
-	else if (index == 2)
-	{
-		cards.textContent = 'Hera';
-	}
-	else if (index == 3)
-	{
-		cards.textContent = 'Zeus';
-	}
-	else if (index == 4)
-	{
-		cards.textContent = 'Limus';
-	}
-	else if (index == 5)
-	{
-		cards.textContent = 'NoCard';
-	}
-}
-
 /*	when tile is clicked this function is executed	*/
 
 function handleClick(tileElement)
@@ -187,44 +187,68 @@ function handleClick(tileElement)
 	let inPlay1 = pl1.getAttribute('inPlay');
 	let inPlay2 = pl2.getAttribute('inPlay');
 	console.log(stage);
-	if (free.localeCompare('true') == 0)
+	if (free.localeCompare('true') == 0 && stage >= 0)
 	{
-		if (selected1.localeCompare('true') == 0 && (stage == 0 || stage == 2))
+		if (selected1.localeCompare('true') == 0 && (stage == 0))// || stage == 2))
+		{
+			if (pl1.children.length == 1 && init1.localeCompare('true') == 0 && stage == 0)
+				return (false);
 			moveCheckPlace1(p1, tileElement, prevLevel, 'pl1', init1, init3);
-		else if (selected3.localeCompare('true') == 0 && (stage == 0 || stage == 2))
+		}
+		else if (selected3.localeCompare('true') == 0 && (stage == 0))// || stage == 2))
+		{
+			if (pl1.children.length == 1 && init3.localeCompare('true') == 0 && stage == 0)
+				return (false);
 			moveCheckPlace1(p3, tileElement, prevLevel, 'pl1', init3, init1);
-		else if (selected2.localeCompare('true') == 0 && (stage == 1 || stage == 4))
+		}
+		else if (selected2.localeCompare('true') == 0 && (stage == 1))// || stage == 4))
+		{
+			if (pl2.children.length == 1 && init2.localeCompare('true') == 0 && stage == 1)
+				return (false);
 			moveCheckPlace1(p2, tileElement, prevLevel, 'pl2', init2, init4);
-		else if (selected4.localeCompare('true') == 0 && (stage == 1 || stage == 4))
+		}
+		else if (selected4.localeCompare('true') == 0 && (stage == 1))// || stage == 4))
+		{
+			if (pl2.children.length == 1 && init4.localeCompare('true') == 0 && stage == 1)
+				return (false);
 			moveCheckPlace1(p4, tileElement, prevLevel, 'pl2', init4, init2);
-		if (inPlay1.localeCompare('true') == 0)
-		{
-			if (selected1.localeCompare('true') == 0)
-				moveCheckPlace2(p1, tileElement, prevLevel, 'pl1', pl1);
-			else if (selected3.localeCompare('true') == 0)
-				moveCheckPlace2(p3, tileElement, prevLevel, 'pl1', pl1);
 		}
-		else if (inPlay2.localeCompare('true') == 0)
+		else// if (stage == 3 || stage == 5)
 		{
-			if (selected2.localeCompare('true') == 0)
-				moveCheckPlace2(p2, tileElement, prevLevel, 'pl2', pl2);
-			else if (selected4.localeCompare('true') == 0)
-				moveCheckPlace2(p4, tileElement, prevLevel, 'pl2', pl2);
-		}
-		else if (free.localeCompare('true') == 0 && (stage == 3 || stage == 5))
-		{
-			if (stage == 3)
+			if (inPlay1.localeCompare('true') == 0)
 			{
-				if (checkIfTileIsCloseEnough(p1, tileElement) == false && checkIfTileIsCloseEnough(p3, tileElement) == false)
-					return (false);
-				switchTileColor(tileElement, prevLevel);
+				console.log("A");
+				if (selected1.localeCompare('true') == 0)
+					moveCheckPlace2(p1, tileElement, prevLevel, 'pl1', pl1);
+				else if (selected3.localeCompare('true') == 0)
+					moveCheckPlace2(p3, tileElement, prevLevel, 'pl1', pl1);
 			}
-			else if (stage == 5)
+			else if (inPlay2.localeCompare('true') == 0)
 			{
-				if (checkIfTileIsCloseEnough(p2, tileElement) == false && checkIfTileIsCloseEnough(p4, tileElement) == false)
-					return (false);
-				switchTileColor(tileElement, prevLevel);
+				console.log("B");
+				if (selected2.localeCompare('true') == 0)
+					moveCheckPlace2(p2, tileElement, prevLevel, 'pl2', pl2);
+				else if (selected4.localeCompare('true') == 0)
+					moveCheckPlace2(p4, tileElement, prevLevel, 'pl2', pl2);
 			}
+			else
+			{
+				if (stage == 3)
+				{
+					console.log("C");
+					if (checkIfTileIsCloseEnough(p1, tileElement) == false && checkIfTileIsCloseEnough(p3, tileElement) == false)
+						return (false);
+					switchTileColor(tileElement, prevLevel);
+				}
+				else if (stage == 5)
+				{
+					console.log("D");
+					if (checkIfTileIsCloseEnough(p2, tileElement) == false && checkIfTileIsCloseEnough(p4, tileElement) == false)
+						return (false);
+					switchTileColor(tileElement, prevLevel);
+				}
+			}
+			console.log("D");
 		}
 	}
 }
@@ -253,6 +277,7 @@ function moveCheckPlace2(player, tileElement, prevLevel, name, pl)
 	movePlayer(player, tileElement, prevLevel);
 	checkIfGameOver(prevLevel, name);
 	pl.setAttribute('inPlay', 'false');
+	switchStage(name);
 	changeGuideTextBuild();
 }
 
@@ -278,19 +303,22 @@ function checkIfValidMove(player, tileElement, prevLevel)
 
 function checkIfTileIsCloseEnough(player, tileElement)
 {
-	const currentTile = tileElement.getAttribute('id');
-	const prevTile = player.parentNode.getAttribute('id');
-	var row = Number(currentTile.match(/\d+/)[0]);
-	var tile = Number(currentTile.match(/\d+$/)[0]);
-	var playerX = Number(prevTile.match(/\d+/)[0]);
-	var playerY = Number(prevTile.match(/\d+$/)[0]);
-	let difX = playerX - row;
-	let difY = playerY - tile;
-	if (difX > 1 || difX < -1)
-		return (false);
-	else if (difY > 1 || difY < -1)
-		return (false);
-	return (true);
+	//if (stage >= 2)
+	//{
+		const currentTile = tileElement.getAttribute('id');
+		const prevTile = player.parentNode.getAttribute('id');
+		var row = Number(currentTile.match(/\d+/)[0]);
+		var tile = Number(currentTile.match(/\d+$/)[0]);
+		var playerX = Number(prevTile.match(/\d+/)[0]);
+		var playerY = Number(prevTile.match(/\d+$/)[0]);
+		let difX = playerX - row;
+		let difY = playerY - tile;
+		if (difX > 1 || difX < -1)
+			return (false);
+		else if (difY > 1 || difY < -1)
+			return (false);
+		return (true);
+	//}
 }
 
 /*	move player	*/
@@ -312,14 +340,20 @@ function movePlayer(player, tileElement, prevLevel)
 
 function switchStage(player)
 {
+	console.log(stage);
 	if (player.localeCompare('pl1') == 0)
 	{
-		if (stage == 0)
+		if (stage == -2)
+		{
+			stage = -1;
+			switchActivePlayer('pl2');
+		}
+		else if (stage == 0)
 		{
 			stage = 1;
 			switchActivePlayer('pl2');
 		}
-		else
+		else if (stage == 2)
 		{
 			stage = 3;
 			switchActivePlayer('build');
@@ -327,12 +361,17 @@ function switchStage(player)
 	}
 	else if (player.localeCompare('pl2') == 0)
 	{
-		if (stage == 1)
+		if (stage == -1)
+		{
+			stage = 0;
+			switchActivePlayer('pl1');
+		}
+		else if (stage == 1)
 		{
 			stage = 2;
 			switchActivePlayer('pl1');
 		}
-		else
+		else if (stage == 4)
 		{
 			stage = 5;
 			switchActivePlayer('build');
@@ -342,13 +381,13 @@ function switchStage(player)
 	{
 		if (stage == 3)
 		{
-			switchActivePlayer('pl2');
 			stage = 4;
+			switchActivePlayer('pl2');
 		}
-		else
+		else if (stage == 5)
 		{
-			switchActivePlayer('pl1');
 			stage = 2;
+			switchActivePlayer('pl1');
 		}
 	}
 }
@@ -420,6 +459,15 @@ function switchTileColor(tileElement, prevLevel)
 	switchStage('build');
 }
 
+function changeGuideTextGodCard()
+{
+	guide.style.color = 'black';
+	if (stage == -1)
+	{
+		guide.textContent = 'Player 2: Select God Card';
+	}
+}
+
 function changeGuideTextP1()
 {
 	guide.style.color = 'red';
@@ -427,7 +475,7 @@ function changeGuideTextP1()
 	{
 		guide.textContent = 'Player 1: Place both pieces on the board';
 	}
-	else
+	else if (stage == 2)
 		guide.textContent = 'Player 1: Move ';
 }
 
@@ -436,16 +484,22 @@ function changeGuideTextP2()
 	guide.style.color = 'blue';
 	if (stage == 1)
 		guide.textContent = 'Player 2: Place both pieces on the board';
-	else
+	else if (stage == 4)
 		guide.textContent = 'Player 2: Move ';
 }
 
 function changeGuideTextBuild()
 {
 	if (stage == 3)
+	{
+		guide.style.color = 'red';
 		guide.textContent = 'Player 1: Build';
-	else
+	}
+	else if (stage == 5)
+	{
+		guide.style.color = 'blue';
 		guide.textContent = 'Player 2: Build';
+	}
 }
 
 /*	checks if game is over	*/

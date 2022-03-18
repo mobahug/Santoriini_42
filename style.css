@@ -36,7 +36,6 @@
 		display: grid;
 		height: calc(17vw - 10px);  /*instead playing around with grid gap gap */
 		grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-
 		justify-content: center;
 		}
 			.piece1 {
@@ -54,6 +53,21 @@
 				height: 50px;
 				border-radius: 100px;
 				box-sizing: 35px;
+			}
+			.piece2 {
+				font-family: "Poppins", sans-serif;
+				background-color: rgb(78, 130, 199);
+				width: 50px;
+				height: 50px;
+				border-radius: 100px;
+			}
+		
+			.piece4 {
+				font-family: "Poppins", sans-serif;
+				background-color: rgb(78, 130, 199);
+				width: 50px;
+				height: 50px;
+				border-radius: 100px;
 			}
 
 		.container div {
@@ -81,21 +95,6 @@
 	}
 
 
-	.piece2 {
-		font-family: "Poppins", sans-serif;
-		background-color: rgb(78, 130, 199);
-		width: 50px;
-		height: 50px;
-		border-radius: 100px;
-	}
-
-	.piece4 {
-		font-family: "Poppins", sans-serif;
-		background-color: rgb(78, 130, 199);
-		width: 50px;
-		height: 50px;
-		border-radius: 100px;
-	}
 
 /*-----Player start base section-----*/
 
@@ -116,21 +115,21 @@
 		border-radius: 10px;
 		align-items: center;
 		justify-content: center;
+		box-shadow: none;
 		}
 
 		.container2 {
 		display: grid;
 		height: calc(17vw - 10px);  /*instead playing around with grid gap gap */
 		grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-
 		justify-content: center;
+
 		}
 
 		.container2 div {
 		margin: 0 10px 10px 0;  /*instead playing around with grid gap gap */
 		background-color: rgb(241, 204, 71);
 		padding: 5px;
-		/*box-shadow: 7px 7px 0px 1px #0000001a;*/
 		text-align: center;
 		border-radius: 10px;
 		align-items: center;
@@ -139,16 +138,39 @@
 
 	.heroInfo {
 		font-family: "Poppins", sans-serif;
-		align-content: center;
+		align-content: top;
 		background-color: rgb(241, 204, 71);
 		margin: 0 0px 10px 0;
 		padding: 5px;
 		border-radius: 10px;
-		align-items: center;
-		justify-content: center;
+		align-items: top;
+		justify-content: top;
 		border: none;
+		max-width: 100%;
+		height: auto;
+		width: auto\9; /* ie8 */
 	}
+
 	.select {
+		box-shadow: none;
+		border-radius: 10px;
+		font-family: 'Poppins', sans-serif;
+		align-content: bottom;
+		background-color: rgb(171, 159, 118);
+		padding: 5px;
+		text-align: center;
+		text-decoration: none;
+	
+		margin-left:25%;
+		margin-right:25%;
+		margin-top: 50%;
+		margin-bottom: 0px;
+		cursor: pointer;
+		background-image: none;
+		float: center;
+	}
+
+	.resetButton {
 		border-radius: 10px;
 		font-family: 'Poppins', sans-serif;
 		align-content: center;
@@ -156,10 +178,6 @@
 		padding: 5px;
 		text-align: center;
 		text-decoration: none;
-		display: inline-block;
-		margin-left:9%;
-		margin-right:25%;
-		margin-top: 50%;
-		margin-bottom: -5rem;
 		cursor: pointer;
+		float: right;
 	}
