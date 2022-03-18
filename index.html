@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Santorini board game</title>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" />
+		<link rel="stylesheet" href="style.css" />
+		<script src="script.js" defer></script>
+
+		<div class="guide" id="instructions">
+			<p> MOVE or BUILD </p>
+		</div>
+	</head>
+	<body>
+		<div class="parent" ></div>
+		<div class="bottom">
+			<button class="resetButton">RESTART</button>
+			<div class="player1">
+
+				<button class="piece1">
+					<p>P1</p>
+				</button>
+
+				<button class="piece3">
+					<p>P1</p>
+				</button>
+			</div>
+			<div class="player2">
+				<button class="piece2">
+					<p>P2</p>
+				</button>
+				<button class="piece4">
+					<p>P2</p>
+				</button>
+			</div>
+		</div>
+			<div id="card-0" class="container2">
+
+				<div id="card-0-tile-0"
+				title="Win condition: You also win if your worker moves down two or more levels.">
+					<button class="heroInfo" onclick="cardButton0()">Minotaur</button>
+					<div class="select">
+						<button class="select" id="Minotaur" selected="false">Select</button>
+					</div>
+					
+				</div>
+
+				<div id="card-0-tile-1"
+				title="Win condition: You also win when there are at least five Complete Towers on the board.">
+					<button class="heroInfo" onclick="cardButton1()">Chronus</button>
+					<div class="select">
+						<button class="select" id="Chronus" selected="false">Select</button>
+					</div>
+				</div>
+
+				<div id="card-0-tile-2"
+				title="Opponent's turn: An opponent cannot win by moving into a perimeter space.">
+					<button class="heroInfo" onclick="cardButton2()">Hera</button>
+					<div class="select">
+						<button class="select" id="Hera" selected="false">Select</button>
+					</div>
+				</div>
+
+				<div id="card-0-tile-3"
+				title="Your build: Your worker may build a block under itself.">
+					<button class="heroInfo" onclick="cardButton3()">Zeus</button>
+					<div class="select">
+						<button class="select" id="Zeus" selected="false">Select</button>
+					</div>
+				</div>
+
+				<div id="card-0-tile-4"
+				title="Opponent's turn: opponent workers cannot build on spaces neighboring your workers, unless building a dome to create a Complete Tower.">
+					<button class="heroInfo" onclick="cardButton4()">Limus</button>
+					<div class="select">
+						<button class="select" id="Limus" selected="false">Select</button>
+					</div>
+				</div>
+
+				<div id="card-0-tile-5"
+				title="The Player choose to not have Hero card.">
+					<button class="heroInfo" onclick="cardButton5()">No Card</button>
+					<div class="select">
+						<button class="select" id="NoCard" selected="false">Select</button>
+					</div>
+				</div>
+			</div>
+	</body>
+</html>
