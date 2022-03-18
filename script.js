@@ -133,7 +133,8 @@ function cardButton5()
 
 function	selectHero(card)
 {
-	if (stage == -2 || stage == -1)
+	let picked = card.getAttribute('selected');
+	if ((stage == -2 || stage == -1) && picked.localeCompare('false') == 0)
 	{
 		let inPlay1 = pl1.getAttribute('inPlay');
 		let inPlay2 = pl2.getAttribute('inPlay');
@@ -149,6 +150,7 @@ function	selectHero(card)
 			pl2.setAttribute('card', godCard);
 			switchStage('pl2');
 		}
+		card.setAttribute('selected', 'true');
 	}
 }
 
@@ -189,35 +191,34 @@ function handleClick(tileElement)
 	console.log(stage);
 	if (free.localeCompare('true') == 0 && stage >= 0)
 	{
-		if (selected1.localeCompare('true') == 0 && (stage == 0))// || stage == 2))
+		if (selected1.localeCompare('true') == 0 && (stage == 0))
 		{
 			if (pl1.children.length == 1 && init1.localeCompare('true') == 0 && stage == 0)
 				return (false);
 			moveCheckPlace1(p1, tileElement, prevLevel, 'pl1', init1, init3);
 		}
-		else if (selected3.localeCompare('true') == 0 && (stage == 0))// || stage == 2))
+		else if (selected3.localeCompare('true') == 0 && (stage == 0))
 		{
 			if (pl1.children.length == 1 && init3.localeCompare('true') == 0 && stage == 0)
 				return (false);
 			moveCheckPlace1(p3, tileElement, prevLevel, 'pl1', init3, init1);
 		}
-		else if (selected2.localeCompare('true') == 0 && (stage == 1))// || stage == 4))
+		else if (selected2.localeCompare('true') == 0 && (stage == 1))
 		{
 			if (pl2.children.length == 1 && init2.localeCompare('true') == 0 && stage == 1)
 				return (false);
 			moveCheckPlace1(p2, tileElement, prevLevel, 'pl2', init2, init4);
 		}
-		else if (selected4.localeCompare('true') == 0 && (stage == 1))// || stage == 4))
+		else if (selected4.localeCompare('true') == 0 && (stage == 1))
 		{
 			if (pl2.children.length == 1 && init4.localeCompare('true') == 0 && stage == 1)
 				return (false);
 			moveCheckPlace1(p4, tileElement, prevLevel, 'pl2', init4, init2);
 		}
-		else// if (stage == 3 || stage == 5)
+		else
 		{
 			if (inPlay1.localeCompare('true') == 0)
 			{
-				console.log("A");
 				if (selected1.localeCompare('true') == 0)
 					moveCheckPlace2(p1, tileElement, prevLevel, 'pl1', pl1);
 				else if (selected3.localeCompare('true') == 0)
@@ -225,7 +226,6 @@ function handleClick(tileElement)
 			}
 			else if (inPlay2.localeCompare('true') == 0)
 			{
-				console.log("B");
 				if (selected2.localeCompare('true') == 0)
 					moveCheckPlace2(p2, tileElement, prevLevel, 'pl2', pl2);
 				else if (selected4.localeCompare('true') == 0)
@@ -235,20 +235,17 @@ function handleClick(tileElement)
 			{
 				if (stage == 3)
 				{
-					console.log("C");
 					if (checkIfTileIsCloseEnough(p1, tileElement) == false && checkIfTileIsCloseEnough(p3, tileElement) == false)
 						return (false);
 					switchTileColor(tileElement, prevLevel);
 				}
 				else if (stage == 5)
 				{
-					console.log("D");
 					if (checkIfTileIsCloseEnough(p2, tileElement) == false && checkIfTileIsCloseEnough(p4, tileElement) == false)
 						return (false);
 					switchTileColor(tileElement, prevLevel);
 				}
 			}
-			console.log("D");
 		}
 	}
 }
@@ -261,7 +258,6 @@ function moveCheckPlace1(player, tileElement, prevLevel, name, init, init2)
 	player.setAttribute('init', 'true');
 	if (init.localeCompare('false') == 0 && init2.localeCompare('false') == 0)
 		return (false);
-	checkIfGameOver(prevLevel, name);
 	switchStage(name);
 }
 
@@ -288,10 +284,21 @@ function moveCheckPlace2(player, tileElement, prevLevel, name, pl)
 
 function checkIfValidMove(player, tileElement, prevLevel)
 {
+	const playerCard = pl1.getAttribute('card');
 	const level = player.getAttribute('level');
+	const piece = player.getAttribute('class');
+
+	var nbr = Number(piece.match(/\d+/)[0]);
 	let dif = prevLevel - level;
 	if (dif >= 2)
 		return (false);
+	else if (dif <= -2 && playerCard.localeCompare('Minotaur') == 0)
+	{
+		if (nbr == 1 || nbr == 3)
+			gameOverDisplay('pl1');
+		else if (nbr == 2 || nbr == 4)
+			gameOverDisplay('pl2');
+	}
 	else
 	{
 		if (checkIfTileIsCloseEnough(player, tileElement) == false)
@@ -303,22 +310,19 @@ function checkIfValidMove(player, tileElement, prevLevel)
 
 function checkIfTileIsCloseEnough(player, tileElement)
 {
-	//if (stage >= 2)
-	//{
-		const currentTile = tileElement.getAttribute('id');
-		const prevTile = player.parentNode.getAttribute('id');
-		var row = Number(currentTile.match(/\d+/)[0]);
-		var tile = Number(currentTile.match(/\d+$/)[0]);
-		var playerX = Number(prevTile.match(/\d+/)[0]);
-		var playerY = Number(prevTile.match(/\d+$/)[0]);
-		let difX = playerX - row;
-		let difY = playerY - tile;
-		if (difX > 1 || difX < -1)
-			return (false);
-		else if (difY > 1 || difY < -1)
-			return (false);
-		return (true);
-	//}
+	const currentTile = tileElement.getAttribute('id');
+	const prevTile = player.parentNode.getAttribute('id');
+	var row = Number(currentTile.match(/\d+/)[0]);
+	var tile = Number(currentTile.match(/\d+$/)[0]);
+	var playerX = Number(prevTile.match(/\d+/)[0]);
+	var playerY = Number(prevTile.match(/\d+$/)[0]);
+	let difX = playerX - row;
+	let difY = playerY - tile;
+	if (difX > 1 || difX < -1)
+		return (false);
+	else if (difY > 1 || difY < -1)
+		return (false);
+	return (true);
 }
 
 /*	move player	*/
@@ -423,8 +427,11 @@ function switchActivePlayer(player)
 
 /*	switch tile color	*/
 
-function switchTileColor(tileElement, prevLevel)
+function switchTileColor(tileElement, prevLevel, name)
 {
+	const player1Card = pl1.getAttribute('card');
+	const player2Card = pl2.getAttribute('card');
+	
 	if (prevLevel <= 3)
 	{
 		tileElement.setAttribute('level', prevLevel + 1);
@@ -449,12 +456,18 @@ function switchTileColor(tileElement, prevLevel)
 		tileElement.textContent = 'LV4';
 		tileElement.style.backgroundColor = 'blue';
 		tileElement.setAttribute('free', 'false');
-		/*countCompleteTowers++;
-		if (cardPlayer1.localeCompare('Chronus') == 0 && countCompleteTowers > 5)
+		countCompleteTowers++;
+		if (countCompleteTowers >= 5)
 		{
-			isGameOver = true;
-			console.log("GAME OVER");
-		}*/
+			if (player1Card.localeCompare('Chronus') == 0)
+				gameOverDisplay('pl1');
+			else if (player2Card.localeCompare('Chronus') == 0)
+				gameOverDisplay('pl2');
+		}
+		/*
+		const playerCard = pl1.getAttribute('card');
+	const level = player.getAttribute('level');
+	const piece = player.getAttribute('class');*/
 	}
 	switchStage('build');
 }
@@ -506,26 +519,14 @@ function changeGuideTextBuild()
 
 function checkIfGameOver(prevLevel, player)
 {
-	//const cardPlayer1 = document.getAttribute('player1'); grab the parent
-	//const cardPlayer2 = document.getAttribute('player2'); grab the parent
 	if (prevLevel == 3)
 	{
 		isGameOver = true;
-		gameOverDisplay(player);
+		if (player.localeCompare('pl1') == 0)
+			gameOverDisplay('pl1');
+		else
+			gameOverDisplay('pl2');
 	}
-	/*else if (card.localeCompare('Minotaur') == 0)
-	{
-		let dif = prevLevel - level;
-		if (dif <= -2)
-		{
-			isGameOver = true;
-			console.log("GAME OVER");
-			if (player.localeCompare('p1') == 0 || player.localeCompare('p3') == 0)
-				console.log("PLAYER 1 WINS");
-			if (player.localeCompare('p2') == 0 || player.localeCompare('p4') == 0)
-				console.log("PLAYER 2 WINS");
-		}
-	}*/
 }
 
 function	gameOverDisplay(player)

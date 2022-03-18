@@ -17,7 +17,7 @@
 	<body>
 		<div class="parent" ></div>
 		<div class="bottom">
-			<button class="resetButton">RESTAR</button>
+			<button class="resetButton">RESTART</button>
 			<div class="player1">
 
 				<button class="piece1">
@@ -43,15 +43,16 @@
 				title="Win condition: You also win if your worker moves down two or more levels.">
 					<button class="heroInfo" onclick="cardButton0()">Minotaur</button>
 					<div class="select">
-						<button class="select" id="Minotaur">Select</button>
+						<button class="select" id="Minotaur" selected="false">Select</button>
 					</div>
+					
 				</div>
 
 				<div id="card-0-tile-1"
 				title="Win condition: You also win when there are at least five Complete Towers on the board.">
 					<button class="heroInfo" onclick="cardButton1()">Chronus</button>
 					<div class="select">
-						<button class="select" id="Chronus">Select</button>
+						<button class="select" id="Chronus" selected="false">Select</button>
 					</div>
 				</div>
 
@@ -59,7 +60,7 @@
 				title="Opponent's turn: An opponent cannot win by moving into a perimeter space.">
 					<button class="heroInfo" onclick="cardButton2()">Hera</button>
 					<div class="select">
-						<button class="select" id="Hera">Select</button>
+						<button class="select" id="Hera" selected="false">Select</button>
 					</div>
 				</div>
 
@@ -67,7 +68,7 @@
 				title="Your build: Your worker may build a block under itself.">
 					<button class="heroInfo" onclick="cardButton3()">Zeus</button>
 					<div class="select">
-						<button class="select" id="Zeus">Select</button>
+						<button class="select" id="Zeus" selected="false">Select</button>
 					</div>
 				</div>
 
@@ -75,7 +76,7 @@
 				title="Opponent's turn: opponent workers cannot build on spaces neighboring your workers, unless building a dome to create a Complete Tower.">
 					<button class="heroInfo" onclick="cardButton4()">Limus</button>
 					<div class="select">
-						<button class="select" id="Limus">Select</button>
+						<button class="select" id="Limus" selected="false">Select</button>
 					</div>
 				</div>
 
@@ -83,10 +84,9 @@
 				title="The Player choose to not have Hero card.">
 					<button class="heroInfo" onclick="cardButton5()">No Card</button>
 					<div class="select">
-						<button class="select" id="NoCard">Select</button>
+						<button class="select" id="NoCard" selected="false">Select</button>
 					</div>
 				</div>
-
 			</div>
 	</body>
 </html>
