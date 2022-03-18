@@ -16,14 +16,41 @@
 	<body>
 		<div class="parent" ></div>
 		<div class="bottom">
-			<button class="player1">
-				<!--<img height="150em" src="file:///Users/ghorvath/Downloads/6720484.png">
-				-->
-				<p>P1</p>
-			</button>
-			<button class="player2">
-				<p>P2</p>
-			</button>
+			<div class="player1">
+				<button class="piece1">
+					<!--<img height="150em" src="file:///Users/ghorvath/Downloads/6720484.png">
+					-->
+					<p>P1</p>
+				</button>
+				<button class="piece3">
+					<!--<img height="150em" src="file:///Users/ghorvath/Downloads/6720484.png">
+					-->
+					<p>P1</p>
+				</button>
+			</div>
+			<div class="player2">
+				<button class="piece2">
+					<p>P2</p>
+				</button>
+				<button class="piece4">
+					<p>P2</p>
+				</button>
+			</div>
 		</div>
+		<div class="parent2"></div>
+			<div id="card-0" class="container2">
+				<div id="card-0-tile-0"
+				title="Win condition: You also win if your worker moves down two or more levels.">
+					<button class="heroInfo" onclick="cardButton()">Minotaur</button>
+					<div>
+						<button class="select" id="selectHero" onclick="selectHero()">Select</button>
+					</div>
+				</div>
+				<div id="card-0-tile-1"></div>
+				<div id="card-0-tile-2"></div>
+				<div id="card-0-tile-3"></div>
+				<div id="card-0-tile-4"></div>
+				<div id="card-0-tile-5"></div>
+			</div>
 	</body>
 </html>

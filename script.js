@@ -1,8 +1,12 @@
 const mapDisplay = document.querySelector('.parent');
-const p1 = document.querySelector('.player1');
-const p2 = document.querySelector('.player2');
-//const p3 = document.querySelector('.player1');
-//const p4 = document.querySelector('.player2');
+const mapDisplay2 = document.querySelector('.parent2');
+
+const pl1 = document.querySelector('.player1');
+const pl2 = document.querySelector('.player2');
+const p1 = document.querySelector('.piece1');
+const p2 = document.querySelector('.piece2');
+const p3 = document.querySelector('.piece3');
+const p4 = document.querySelector('.piece4');
 const guide = document.querySelector('.guide');
 
 let stage = 0;
@@ -17,6 +21,10 @@ const rows = [
 	['', '', '', '', '']
 ]
 
+const cards = [
+	['', '', '', '', '', '']
+] 
+
 /*	initiate players	*/
 
 /*	player 1 pieces	*/
@@ -24,45 +32,47 @@ const rows = [
 guide.style.color = 'red';
 guide.textContent = 'Player 1: Place both pieces on the board';
 
+pl1.setAttribute('inPlay', 'true');
+pl2.setAttribute('inPlay', 'false');
+
 p1.setAttribute('level', 0);
 p1.setAttribute('selected', 'false');
-p1.setAttribute('inPlay', 'true');
-p1.addEventListener('click', () => handleClickPlayer(p1));//, p3));
+p1.setAttribute('init', 'false');
+p1.addEventListener('click', () => handleClickPlayer(p1, p3));
 
-/*p3.setAttribute('level', 0);
+p3.setAttribute('level', 0);
 p3.setAttribute('selected', 'false');
-p3.setAttribute('inPlay', 'true');
-p3.addEventListener('click', () => handleClickPlayer(p3));//, p1));
+p3.setAttribute('init', 'false');
+p3.addEventListener('click', () => handleClickPlayer(p3, p1));
 
-/*	player 1 pieces	*/
+/*	player 2 pieces	*/
 
 p2.setAttribute('level', 0);
 p2.setAttribute('selected', 'false');
-p2.setAttribute('inPlay', 'false');
-p2.addEventListener('click', () => handleClickPlayer(p2));//, p4));
+p2.setAttribute('init', 'false');
+p2.addEventListener('click', () => handleClickPlayer(p2, p4));
 
-/*p4.setAttribute('level', 0);
+p4.setAttribute('level', 0);
 p4.setAttribute('selected', 'false');
-p4.setAttribute('inPlay', 'false');
-p4.addEventListener('click', () => handleClickPlayer(p4));//, p2));
-*/
-function handleClickPlayer(player)
-{
-	let selected = player.getAttribute('selected');
-	if (selected.localeCompare('false') == 0)
-		player.setAttribute('selected', 'true');
-}
-/*
+p4.setAttribute('init', 'false');
+p4.addEventListener('click', () => handleClickPlayer(p4, p2));
+
 function handleClickPlayer(player, player2)
 {
 	let selected = player.getAttribute('selected');
+	player2.setAttribute('selected', 'false');
 	if (selected.localeCompare('false') == 0)
 	{
 		player.setAttribute('selected', 'true');
-		player2.setAttribute('selected', 'false');
 	}
 }
-*/
+
+//p2.style.display = "none";
+function cardButton()
+{
+	alert("Win condition: You also win if your worker moves down two or more levels.");
+}
+
 /*	creates map	*/
 
 rows.forEach((row, rowIndex) => {
@@ -81,6 +91,50 @@ rows.forEach((row, rowIndex) => {
 	mapDisplay.append(rowElement);
 })
 
+cards.forEach((card, cardIndex) => {
+	let index = 0;
+	const cardElement = document.createElement('div');
+	cardElement.setAttribute('id', 'card-' + cardIndex);
+	cardElement.setAttribute('class', 'container2');
+	card.forEach((tile, tileIndex) => {
+		const tileElement = document.createElement('div');
+		tileElement.setAttribute('id', 'card-' + cardIndex + '-tile-' + tileIndex);
+		//tileElement.addEventListener('click', () => handleClick(tileElement));
+		IndexOfCards(index);
+		index++;
+		cardElement.append(tileElement);
+	})
+	mapDisplay2.append(cardElement);
+})
+
+function IndexOfCards(index)
+{
+	if (index == 0)
+	{
+		cards.textContent = 'Minotaur';
+	}
+	else if (index == 1)
+	{
+		cards.textContent = 'Chronus';
+	}
+	else if (index == 2)
+	{
+		cards.textContent = 'Hera';
+	}
+	else if (index == 3)
+	{
+		cards.textContent = 'Zeus';
+	}
+	else if (index == 4)
+	{
+		cards.textContent = 'Limus';
+	}
+	else if (index == 5)
+	{
+		cards.textContent = 'NoCard';
+	}
+}
+
 /*	when tile is clicked this function is executed	*/
 
 function handleClick(tileElement)
@@ -89,63 +143,84 @@ function handleClick(tileElement)
 	let free = tileElement.getAttribute('free');
 	let selected1 = p1.getAttribute('selected');
 	let selected2 = p2.getAttribute('selected');
-	let inPlay1 = p1.getAttribute('inPlay');
-	let inPlay2 = p2.getAttribute('inPlay');
+	let selected3 = p3.getAttribute('selected');
+	let selected4 = p4.getAttribute('selected');
+	let init1 = p1.getAttribute('init');
+	let init2 = p2.getAttribute('init');
+	let init3 = p3.getAttribute('init');
+	let init4 = p4.getAttribute('init');
+	let inPlay1 = pl1.getAttribute('inPlay');
+	let inPlay2 = pl2.getAttribute('inPlay');
 	console.log(stage);
-	if (selected1.localeCompare('true') == 0 && (stage == 0 || stage == 2))
+	if (free.localeCompare('true') == 0)
 	{
-		movePlayer(p1, tileElement, prevLevel);
-		checkIfGameOver(prevLevel, 'p1');
-		switchStage('p1');
-	}
-	else if (selected2.localeCompare('true') == 0 && (stage == 1 || stage == 4))
-	{
-		movePlayer(p2, tileElement, prevLevel);
-		checkIfGameOver(prevLevel, p2);
-		switchStage('p2');
-	}
-	else if (stage == 3 || stage == 5)
-	{
+		if (selected1.localeCompare('true') == 0 && (stage == 0 || stage == 2))
+			moveCheckPlace1(p1, tileElement, prevLevel, 'pl1', init1, init3);
+		else if (selected3.localeCompare('true') == 0 && (stage == 0 || stage == 2))
+			moveCheckPlace1(p3, tileElement, prevLevel, 'pl1', init3, init1);
+		else if (selected2.localeCompare('true') == 0 && (stage == 1 || stage == 4))
+			moveCheckPlace1(p2, tileElement, prevLevel, 'pl2', init2, init4);
+		else if (selected4.localeCompare('true') == 0 && (stage == 1 || stage == 4))
+			moveCheckPlace1(p4, tileElement, prevLevel, 'pl2', init4, init2);
 		if (inPlay1.localeCompare('true') == 0)
 		{
-			if (checkIfValidMove(p1, tileElement, prevLevel, free) == false)
-			{
-				// return error message to user or maybe play audio that it is wrong move
-				return (false);
-			}
-			movePlayer(p1, tileElement, prevLevel);
-			checkIfGameOver(prevLevel, 'p1');
-			p1.setAttribute('inPlay', 'false');
-			changeGuideTextBuild();
+			if (selected1.localeCompare('true') == 0)
+				moveCheckPlace2(p1, tileElement, prevLevel, 'pl1', pl1);
+			else if (selected3.localeCompare('true') == 0)
+				moveCheckPlace2(p3, tileElement, prevLevel, 'pl1', pl1);
 		}
 		else if (inPlay2.localeCompare('true') == 0)
 		{
-			if (checkIfValidMove(p2, tileElement, prevLevel, free) == false)
-			{
-				// return error message to user or maybe play audio that it is wrong move
-				return (false);
-			}
-			movePlayer(p2, tileElement, prevLevel);
-			checkIfGameOver(prevLevel, 'p2');
-			p2.setAttribute('inPlay', 'false');
-			changeGuideTextBuild();
+			if (selected2.localeCompare('true') == 0)
+				moveCheckPlace2(p2, tileElement, prevLevel, 'pl2', pl2);
+			else if (selected4.localeCompare('true') == 0)
+				moveCheckPlace2(p4, tileElement, prevLevel, 'pl2', pl2);
 		}
-		else if (free.localeCompare('true') == 0)
+		else if (free.localeCompare('true') == 0 && (stage == 3 || stage == 5))
 		{
 			if (stage == 3)
 			{
-				if (checkIfTileIsCloseEnough(p1, tileElement) == false)// && checkIfTileIsCloseEnough(p3, tileElement) == false)
+				if (checkIfTileIsCloseEnough(p1, tileElement) == false && checkIfTileIsCloseEnough(p3, tileElement) == false)
 					return (false);
 				switchTileColor(tileElement, prevLevel);
 			}
 			else if (stage == 5)
 			{
-				if (checkIfTileIsCloseEnough(p2, tileElement) == false)// && checkIfTileIsCloseEnough(p4, tileElement) == false)
+				if (checkIfTileIsCloseEnough(p2, tileElement) == false && checkIfTileIsCloseEnough(p4, tileElement) == false)
 					return (false);
 				switchTileColor(tileElement, prevLevel);
 			}
 		}
 	}
+	
+}
+
+/*	function called in initialization fase	*/
+
+function moveCheckPlace1(player, tileElement, prevLevel, name, init, init2)
+{
+	movePlayer(player, tileElement, prevLevel);
+	player.setAttribute('init', 'true');
+	if (init.localeCompare('false') == 0 && init2.localeCompare('false') == 0)
+		return (false);
+	checkIfGameOver(prevLevel, name);
+	switchStage(name);
+}
+
+/*	function called throughout game	*/
+
+function moveCheckPlace2(player, tileElement, prevLevel, name, pl)
+{
+	if (checkIfValidMove(player, tileElement, prevLevel) == false)
+	{
+		console.log("i was here");
+		// return error message to user or maybe play audio that it is wrong move
+		return (false);
+	}
+	movePlayer(player, tileElement, prevLevel);
+	checkIfGameOver(prevLevel, name);
+	pl.setAttribute('inPlay', 'false');
+	changeGuideTextBuild();
 }
 
 /*	checks if valid position player is trying to move to	*/
@@ -153,13 +228,11 @@ function handleClick(tileElement)
 /*	checks that player doesn't try to move heigher up that possible	*/
 /*	checks player try to move inside 3x3 square	*/
 
-function checkIfValidMove(player, tileElement, prevLevel, free)
+function checkIfValidMove(player, tileElement, prevLevel)
 {
 	const level = player.getAttribute('level');
 	let dif = prevLevel - level;
-	if (free.localeCompare('false') == 0)
-		return (false);
-	else if (dif >= 2)
+	if (dif >= 2)
 		return (false);
 	else
 	{
@@ -191,8 +264,12 @@ function checkIfTileIsCloseEnough(player, tileElement)
 
 function movePlayer(player, tileElement, prevLevel)
 {
-	const prevTile = player.parentNode;
-	prevTile.setAttribute('free', 'true');
+	let curInit = player.getAttribute('init');
+	if (curInit.localeCompare('true') == 0)
+	{
+		const prevTile = player.parentNode;
+		prevTile.setAttribute('free', 'true');
+	}
 	tileElement.appendChild(player);
 	player.setAttribute('level', prevLevel);
 	tileElement.setAttribute('free', 'false');
@@ -202,12 +279,12 @@ function movePlayer(player, tileElement, prevLevel)
 
 function switchStage(player)
 {
-	if (player.localeCompare('p1') == 0)
+	if (player.localeCompare('pl1') == 0)
 	{
 		if (stage == 0)
 		{
 			stage = 1;
-			switchActivePlayer('p2');
+			switchActivePlayer('pl2');
 		}
 		else
 		{
@@ -215,12 +292,12 @@ function switchStage(player)
 			switchActivePlayer('build');
 		}
 	}
-	else if (player.localeCompare('p2') == 0)
+	else if (player.localeCompare('pl2') == 0)
 	{
 		if (stage == 1)
 		{
 			stage = 2;
-			switchActivePlayer('p1');
+			switchActivePlayer('pl1');
 		}
 		else
 		{
@@ -232,12 +309,12 @@ function switchStage(player)
 	{
 		if (stage == 3)
 		{
-			switchActivePlayer('p2');
+			switchActivePlayer('pl2');
 			stage = 4;
 		}
 		else
 		{
-			switchActivePlayer('p1');
+			switchActivePlayer('pl1');
 			stage = 2;
 		}
 	}
@@ -247,24 +324,28 @@ function switchStage(player)
 
 function switchActivePlayer(player)
 {
-	if (player.localeCompare('p1') == 0)
+	if (player.localeCompare('pl1') == 0)
 	{
 		changeGuideTextP1();
-		p1.setAttribute('inPlay', 'true');
+		pl1.setAttribute('inPlay', 'true');
 		p1.setAttribute('selected', 'false');
-		p2.setAttribute('inPlay', 'false');
+		p3.setAttribute('selected', 'false');
+		pl2.setAttribute('inPlay', 'false');
 	}
-	else if (player.localeCompare('p2') == 0)
+	else if (player.localeCompare('pl2') == 0)
 	{
 		changeGuideTextP2();
-		p2.setAttribute('inPlay', 'true');
+		pl2.setAttribute('inPlay', 'true');
 		p2.setAttribute('selected', 'false');
-		p1.setAttribute('inPlay', 'false');
+		p4.setAttribute('selected', 'false');
+		pl1.setAttribute('inPlay', 'false');
 	}
 	else
 	{
 		p1.setAttribute('selected', 'false');
 		p2.setAttribute('selected', 'false');
+		p3.setAttribute('selected', 'false');
+		p4.setAttribute('selected', 'false');
 	}
 }
 
@@ -343,11 +424,7 @@ function checkIfGameOver(prevLevel, player)
 	if (prevLevel == 3)
 	{
 		isGameOver = true;
-		console.log("GAME OVER");
-		if (player.localeCompare('p1') == 0 || player.localeCompare('p3') == 0)
-			console.log("PLAYER 1 WINS");
-		if (player.localeCompare('p2') == 0 || player.localeCompare('p4') == 0)
-			console.log("PLAYER 2 WINS");
+		gameOverDisplay(player);
 	}
 	/*else if (card.localeCompare('Minotaur') == 0)
 	{
@@ -364,6 +441,13 @@ function checkIfGameOver(prevLevel, player)
 	}*/
 }
 
+function	gameOverDisplay(player)
+{
+	if (player.localeCompare('pl1') == 0)
+		alert('GAME OVER\nPLAYER 1 WINS!');
+	else if (player.localeCompare('pl2') == 0)
+		alert('GAME OVER\nPLAYER 2 WINS!');
+}
 
 // make two pieces for each player
 // change text of move / build text - have them be two seperate pieces?

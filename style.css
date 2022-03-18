@@ -21,6 +21,9 @@
 		height: auto;
 		width: auto\9; /* ie8 */
 	}
+
+/*-----Board with 25 tiles-----*/
+
 	.parent {
 
 		background-color: rgb(154, 209, 117);
@@ -36,7 +39,15 @@
 		
 		justify-content: center;
 		}
-			.player1 {
+			.piece1 {
+				font-family: "Poppins", sans-serif;
+				background-color: rgb(199, 78, 78);
+				width: 50px;
+				height: 50px;
+				border-radius: 100px;
+				box-sizing: 35px;
+			}
+			.piece3 {
 				font-family: "Poppins", sans-serif;
 				background-color: rgb(199, 78, 78);
 				width: 50px;
@@ -55,7 +66,9 @@
 		align-items: center;
 		justify-content: center;
 		}
-		
+
+
+/*-----Top bar guide/turn-----*/
 
 	.guide {
 		font-family: "Poppins", sans-serif;
@@ -68,13 +81,23 @@
 	}
 
 
-	.player2 {
+	.piece2 {
 		font-family: "Poppins", sans-serif;
 		background-color: rgb(78, 130, 199);
 		width: 50px;
 		height: 50px;
 		border-radius: 100px;
 	}
+
+	.piece4 {
+		font-family: "Poppins", sans-serif;
+		background-color: rgb(78, 130, 199);
+		width: 50px;
+		height: 50px;
+		border-radius: 100px;
+	}
+
+/*-----Player start base section-----*/
 
 	.bottom {
 
@@ -84,3 +107,54 @@
 		justify-content: center;
 		margin: 10px;
 		}
+
+/*-----cards section-----*/
+
+	.parent2 {
+
+		background-color: rgb(154, 209, 117);
+		border-radius: 10px;
+		align-items: center;
+		justify-content: center;
+		}
+
+		.container2 {
+		display: grid;
+		height: calc(17vw - 10px);  /*instead playing around with grid gap gap */
+		grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+		
+		justify-content: center;
+		}
+	
+		.container2 div {
+		margin: 0 10px 10px 0;  /*instead playing around with grid gap gap */
+		background-color: rgb(241, 204, 71);
+		padding: 5px;
+		box-shadow: 7px 7px 0px 1px #0000001a;
+		display: flex;  /* or grid */
+		border-radius: 10px;
+		align-items: center;
+		justify-content: center;
+		}
+
+	.heroInfo {
+		font-family: "Poppins", sans-serif;
+		align-content: center;
+		
+		background-color: rgb(241, 204, 71);
+		margin: 0 10px 10px 0;
+		padding: 5px;
+		border-color: aqua;
+		border-radius: 10px;
+		align-items: center;
+		justify-content: center;
+		border: none;
+	}
+	.select {
+		border-radius: 10px;
+		box-shadow: none;
+		font-family: 'Poppins', sans-serif;
+		align-content: center;
+		background-color: rgb(171, 159, 118);
+		
+	}
