@@ -123,7 +123,7 @@ function	selectHero(card)
 		let inPlay1 = pl1.getAttribute('inPlay');
 		let inPlay2 = pl2.getAttribute('inPlay');
 		let godCard = card.getAttribute('id');
-	
+
 		if (inPlay1.localeCompare('true') == 0)
 		{
 			pl1.setAttribute('card', godCard);
@@ -283,7 +283,10 @@ function checkIfValidMove(player, tileElement, prevLevel)
 	{
 		if (nbr == 1 || nbr == 3)
 			gameOverDisplay('pl1');
-		else if (nbr == 2 || nbr == 4)
+	}
+	else if (dif <= -2 && playerCard2.localeCompare('Minotaur') == 0)
+	{
+		if (nbr == 2 || nbr == 4)
 			gameOverDisplay('pl2');
 	}
 	else
@@ -417,7 +420,7 @@ function switchTileColor(tileElement, prevLevel, name)
 {
 	const player1Card = pl1.getAttribute('card');
 	const player2Card = pl2.getAttribute('card');
-	
+
 	if (prevLevel <= 3)
 	{
 		tileElement.setAttribute('level', prevLevel + 1);
