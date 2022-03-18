@@ -233,6 +233,25 @@ function handleClick(tileElement)
 					switchTileColor(tileElement, prevLevel);
 				}
 			}
+			const player1tile = p1.parentNode;
+			const player2tile = p2.parentNode;
+			const player3tile = p3.parentNode;
+			const player4tile = p4.parentNode;
+			if (checkFreeSpace(p1, player1tile) == false)
+			{
+				if (checkFreeSpace(p3, player3tile) == false)
+				{
+					gameOverDisplay('pl2');
+				}
+			}
+			if (checkFreeSpace(p2, player2tile) == false)
+			{
+				if (checkFreeSpace(p4, player4tile) == false)
+				{
+					gameOverDisplay('pl1');
+				}
+			}
+
 		}
 	}
 }
@@ -271,7 +290,8 @@ function moveCheckPlace2(player, tileElement, prevLevel, name, pl)
 
 function checkIfValidMove(player, tileElement, prevLevel)
 {
-	const playerCard = pl1.getAttribute('card');
+	const playerCard1 = pl1.getAttribute('card');
+	const playerCard2 = pl2.getAttribute('card');
 	const level = player.getAttribute('level');
 	const piece = player.getAttribute('class');
 
@@ -279,7 +299,7 @@ function checkIfValidMove(player, tileElement, prevLevel)
 	let dif = prevLevel - level;
 	if (dif >= 2)
 		return (false);
-	else if (dif <= -2 && playerCard.localeCompare('Minotaur') == 0)
+	else if (dif <= -2 && playerCard1.localeCompare('Minotaur') == 0)
 	{
 		if (nbr == 1 || nbr == 3)
 			gameOverDisplay('pl1');
@@ -297,6 +317,61 @@ function checkIfValidMove(player, tileElement, prevLevel)
 }
 
 /*	checks if the tile we are trying to move the player to is within range	*/
+
+function checkFreeSpace(player, tileElement)
+{
+	const currentTile = tileElement.getAttribute('id');
+	const prevTile = player.parentNode.getAttribute('id');
+	let i = row - 1;
+	let j = tile - 1;
+
+	var row = Number(currentTile.match(/\d+/)[0]);
+	var tile = Number(currentTile.match(/\d+$/)[0]);
+	var playerX = Number(prevTile.match(/\d+/)[0]);
+	var playerY = Number(prevTile.match(/\d+$/)[0]);
+	let difX = playerX - row;
+	let difY = playerY - tile;
+	let counter = 0;
+	while (j < 0)
+	{
+		j++;
+		count += 3;
+	}
+	while (i < 0)
+	{
+		i++;
+		count += 3;
+	}
+	while (j > 4)
+	{
+		j--;
+		count += 3;
+	}
+	while (i > 4)
+	{
+		i--;
+		count += 3;
+	}
+	while(i <= row + 1)
+	{
+		while(j <= tile + 1)
+		{
+			let tile = rows.document.querySelector('row-' + i + '-tile-' + j);
+			let status = tile.getAttribute('free');
+			if (status.localeCompare('false') == 0)
+			{
+				count++;
+			}
+			j++;
+		}
+		i++;
+		j = tile - 1;
+	}
+	if (count == 6)
+	{
+		return false;
+	}
+}
 
 function checkIfTileIsCloseEnough(player, tileElement)
 {
