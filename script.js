@@ -1,3 +1,5 @@
+/*	grab html content	*/
+
 const mapDisplay = document.querySelector('.parent');
 const mapDisplay2 = document.querySelector('.parent2');
 
@@ -14,24 +16,21 @@ const resetButton = document.querySelector('.resetButton');
 
 const	minotaur = document.getElementById("Minotaur");
 const	chronus = document.getElementById("Chronus");
-const	hera = document.getElementById("Hera");
-const	zeus = document.getElementById("Zeus");
-const	limus = document.getElementById("Limus");
 const	noCard = document.getElementById("NoCard");
+
+/*	make buttons clickable	*/
 
 minotaur.addEventListener('click', () => selectHero(minotaur));
 chronus.addEventListener('click', () => selectHero(chronus));
-hera.addEventListener('click', () => selectHero(hera));
-zeus.addEventListener('click', () => selectHero(zeus));
-limus.addEventListener('click', () => selectHero(limus));
 noCard.addEventListener('click', () => selectHero(noCard));
 
 resetButton.addEventListener('click', () => {
 	window.location.reload();
 });
 
+/*	variable and array declarations	*/
+
 let stage = -2;
-let isGameOver = false;
 let countCompleteTowers = 0;
 
 const rows = [
@@ -46,9 +45,7 @@ const cards = [
 	['', '', '', '', '', '']
 ]
 
-/*	initiate players	*/
-
-/*	player 1 pieces	*/
+/*	Initialize player 1 pieces	*/
 
 guide.style.color = 'black';
 guide.textContent = 'Player 1: Select God Card';
@@ -68,7 +65,7 @@ p3.setAttribute('selected', 'false');
 p3.setAttribute('init', 'false');
 p3.addEventListener('click', () => handleClickPlayer(p3, p1));
 
-/*	player 2 pieces	*/
+/*	Initialize player 2 pieces	*/
 
 p2.setAttribute('level', 0);
 p2.setAttribute('selected', 'false');
@@ -79,6 +76,8 @@ p4.setAttribute('level', 0);
 p4.setAttribute('selected', 'false');
 p4.setAttribute('init', 'false');
 p4.addEventListener('click', () => handleClickPlayer(p4, p2));
+
+/*	whenever you click on a player this function is being executed	*/
 
 function handleClickPlayer(player, player2)
 {
@@ -93,6 +92,8 @@ function handleClickPlayer(player, player2)
 	}
 }
 
+/*	buttons for the God cards that shows the description of the cards	*/
+
 function cardButton0()
 {
 	/*Minotaur*/
@@ -105,44 +106,28 @@ function cardButton1()
 	alert("Win condition: You also win when there are at least five Complete Towers on the board.");
 }
 
-function cardButton2()
-{
-	/*Hera*/
-	alert("Opponent's turn: An opponent cannot win by moving into a perimeter space.");
-}
-
-function cardButton3()
-{
-	/*Zeus*/
-	alert("Your build: Your worker may build a block under itself.");
-}
-
-function cardButton4()
-{
-	/*Limus*/
-	alert("Opponent's turn: opponent workers cannot build on spaces neighboring your workers, unless building a dome to create a Complete Tower.");
-}
-
 function cardButton5()
 {
 	/*Zeus*/
 	alert("The Player choose to not have Hero card.");
 }
 
-/*	assign card attribute to player	*/
+/*	assign God card attribute to player	*/
 
 function	selectHero(card)
 {
 	let picked = card.getAttribute('selected');
+	console.log(stage);
 	if ((stage == -2 || stage == -1) && picked.localeCompare('false') == 0)
 	{
 		let inPlay1 = pl1.getAttribute('inPlay');
 		let inPlay2 = pl2.getAttribute('inPlay');
 		let godCard = card.getAttribute('id');
-
+	
 		if (inPlay1.localeCompare('true') == 0)
 		{
 			pl1.setAttribute('card', godCard);
+			pl1.getAttribute('inPlay');
 			switchStage('pl1');
 		}
 		else if (inPlay2.localeCompare('true') == 0)
@@ -150,7 +135,8 @@ function	selectHero(card)
 			pl2.setAttribute('card', godCard);
 			switchStage('pl2');
 		}
-		card.setAttribute('selected', 'true');
+		if (godCard.localeCompare('NoCard') != 0)
+			card.setAttribute('selected', 'true');
 	}
 }
 
@@ -173,6 +159,7 @@ rows.forEach((row, rowIndex) => {
 })
 
 /*	when tile is clicked this function is executed	*/
+/*	it checks if you want to place a piece or building	*/
 
 function handleClick(tileElement)
 {
@@ -250,7 +237,7 @@ function handleClick(tileElement)
 	}
 }
 
-/*	function called in initialization fase	*/
+/*	function called when placing the two pieces in the beginning of game	*/
 
 function moveCheckPlace1(player, tileElement, prevLevel, name, init, init2)
 {
@@ -278,9 +265,9 @@ function moveCheckPlace2(player, tileElement, prevLevel, name, pl)
 }
 
 /*	checks if valid position player is trying to move to	*/
-/*	checks if it's free to move there	*/
-/*	checks that player doesn't try to move heigher up that possible	*/
-/*	checks player try to move inside 3x3 square	*/
+/*	checks that player doesn't try to move heigher up than possible	*/
+/*	checks if player has minotaur card and if so call win function from here */
+/*	checks that player tries to move inside 3x3 square	*/
 
 function checkIfValidMove(player, tileElement, prevLevel)
 {
@@ -325,7 +312,7 @@ function checkIfTileIsCloseEnough(player, tileElement)
 	return (true);
 }
 
-/*	move player	*/
+/*	moves player from one tile to another while setting previous tiles 'free' attribute back to 'true'	*/
 
 function movePlayer(player, tileElement, prevLevel)
 {
@@ -340,11 +327,10 @@ function movePlayer(player, tileElement, prevLevel)
 	tileElement.setAttribute('free', 'false');
 }
 
-/*	switches the stage depending on the current player	*/
+/*	switches the stage depending on the current player or phase	*/
 
 function switchStage(player)
 {
-	console.log(stage);
 	if (player.localeCompare('pl1') == 0)
 	{
 		if (stage == -2)
@@ -464,10 +450,6 @@ function switchTileColor(tileElement, prevLevel, name)
 			else if (player2Card.localeCompare('Chronus') == 0)
 				gameOverDisplay('pl2');
 		}
-		/*
-		const playerCard = pl1.getAttribute('card');
-	const level = player.getAttribute('level');
-	const piece = player.getAttribute('class');*/
 	}
 	switchStage('build');
 }
@@ -521,13 +503,14 @@ function checkIfGameOver(prevLevel, player)
 {
 	if (prevLevel == 3)
 	{
-		isGameOver = true;
 		if (player.localeCompare('pl1') == 0)
 			gameOverDisplay('pl1');
 		else
 			gameOverDisplay('pl2');
 	}
 }
+
+/*	game over display	*/
 
 function	gameOverDisplay(player)
 {
@@ -536,10 +519,3 @@ function	gameOverDisplay(player)
 	else if (player.localeCompare('pl2') == 0)
 		alert('GAME OVER\nPLAYER 2 WINS!');
 }
-
-// make two pieces for each player
-// change text of move / build text - have them be two seperate pieces?
-// make God cards?
-// make error messages or sound or add sound each time you click and move piece
-// game over screen with winning player text?
-// retry button
