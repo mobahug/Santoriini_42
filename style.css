@@ -1,11 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600&display=swap");
 * {
 	margin: 0;
-	padding: 25px;
+	padding: 10px;
 
 	}
+	
 	body {
-		max-width: 100%;
+		max-width: 50%;
 		height: auto;
 		width: auto\9; /* ie8 */
 
@@ -34,7 +35,7 @@
 
 		.container {
 		display: grid;
-		height: calc(17vw - 10px);  /*instead playing around with grid gap gap */
+		height: calc(8vw - 10px);  /*instead playing around with grid gap gap */
 		grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 		justify-content: center;
 		}
@@ -120,7 +121,7 @@
 
 		.container2 {
 		display: grid;
-		height: calc(17vw - 10px);  /*instead playing around with grid gap gap */
+		height: calc(5vw - 10px);  /*instead playing around with grid gap gap */
 		grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
 		justify-content: center;
 

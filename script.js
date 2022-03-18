@@ -424,23 +424,23 @@ function switchTileColor(tileElement, prevLevel, name)
 		if (prevLevel == 0)
 		{
 			tileElement.textContent = 'LV1';
-			tileElement.style.backgroundColor = 'white';
+			tileElement.style.backgroundColor = '#F9FFE3';
 		}
 		else if (prevLevel == 1)
 		{
 			tileElement.textContent = 'LV2';
-			tileElement.style.backgroundColor = 'purple';
+			tileElement.style.backgroundColor = '#B9BF00';
 		}
 		else if (prevLevel == 2)
 		{
 			tileElement.textContent = 'LV3';
-			tileElement.style.backgroundColor = 'black';
+			tileElement.style.backgroundColor = '#008C5E';
 		}
 	}
 	if (prevLevel == 3)
 	{
 		tileElement.textContent = 'LV4';
-		tileElement.style.backgroundColor = 'blue';
+		tileElement.style.backgroundColor = '#0049DC';
 		tileElement.setAttribute('free', 'false');
 		countCompleteTowers++;
 		if (countCompleteTowers >= 5)
