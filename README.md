@@ -22,3 +22,9 @@ You should be good to play the game !
 Have fun!
 
 ![ezgif com-gif-maker](https://user-images.githubusercontent.com/83179142/160073484-a47b6ef1-f2c4-4f8a-afd4-44b193885e08.gif)
+
+### Credit
+
+Thank you for the collaboration:
+
+Mundal1994
